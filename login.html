@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>登录 · 墨韵薪传</title>
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/subpage.css">
+</head>
+<body data-page="login">
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="logo" href="index.html">墨韵薪传</a>
+      <nav class="main-nav" aria-label="主导航">
+        <ul>
+          <li><a data-nav="home" href="index.html">首页</a></li>
+          <li><a data-nav="contact" href="contact.html">联系</a></li>
+        </ul>
+      </nav>
+      <ul class="utility-nav">
+        <li><span data-username>未登录访客</span></li>
+      </ul>
+    </div>
+  </header>
+  <main class="page-main">
+    <div class="container subpage-layout">
+      <section class="panel form-card">
+        <p class="eyebrow">数字展馆入口</p>
+        <h1>登录非遗文化数字展览馆</h1>
+        <p>输入用户名和密码，进入水墨长卷式展馆首页。</p>
+        <form id="loginForm">
+          <div class="field">
+            <label for="username">用户名</label>
+            <input id="username" name="username" type="text" placeholder="例如：许同学">
+          </div>
+          <div class="field">
+            <label for="password">密码</label>
+            <input id="password" name="password" type="password" placeholder="请输入 6 到 16 位密码">
+          </div>
+          <p id="loginFeedback" class="feedback" aria-live="polite"></p>
+          <button type="submit" class="btn">进入展馆</button>
+        </form>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <span>课程要求覆盖：数据验证 / 用户状态</span>
+      <span>页面入口：登录页</span>
+    </div>
+  </footer>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/login.js"></script>
+</body>
+</html>

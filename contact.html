@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>联系 · 墨韵薪传</title>
+  <link rel="stylesheet" href="assets/css/global.css">
+  <link rel="stylesheet" href="assets/css/subpage.css">
+</head>
+<body data-page="contact">
+  <header class="site-header">
+    <div class="container site-header__inner">
+      <a class="logo" href="index.html">墨韵薪传</a>
+      <nav class="main-nav" aria-label="主导航">
+        <ul>
+          <li><a data-nav="home" href="index.html">首页</a></li>
+          <li><a data-nav="tradition" href="category-tradition.html">传统技艺</a></li>
+          <li><a data-nav="folk" href="category-folk.html">民俗</a></li>
+          <li><a data-nav="opera" href="category-opera.html">戏曲</a></li>
+          <li><a data-nav="handcraft" href="category-handcraft.html">手工</a></li>
+          <li><a data-nav="contact" href="contact.html">联系</a></li>
+        </ul>
+      </nav>
+      <ul class="utility-nav">
+        <li><span data-username>未登录访客</span></li>
+        <li><a href="login.html">登录</a></li>
+        <li><a href="#" data-logout>退出</a></li>
+        <li><span>收藏 <strong data-collection-count>0</strong></span></li>
+      </ul>
+    </div>
+  </header>
+  <main class="page-main">
+    <div class="container subpage-layout">
+      <section class="panel subpage-hero">
+        <p class="eyebrow">联系与反馈</p>
+        <h1>联系非遗文化数字展览馆</h1>
+        <div class="contact-grid">
+          <div class="detail-card">
+            <h2>馆方联系信息</h2>
+            <p>展馆邮箱：museum@heritage.example</p>
+            <p>咨询电话：0571-12345678</p>
+            <p>服务时间：周一至周日 09:00 - 21:00</p>
+          </div>
+          <div class="detail-card">
+            <h2>留言后可获得</h2>
+            <p>非遗主题导览建议、详情页推荐路径和后续活动通知。</p>
+          </div>
+        </div>
+      </section>
+      <section class="panel form-card">
+        <form id="contactForm">
+          <div class="field">
+            <label for="contactName">姓名</label>
+            <input id="contactName" type="text" placeholder="请输入姓名">
+          </div>
+          <div class="field">
+            <label for="contactEmail">邮箱</label>
+            <input id="contactEmail" type="email" placeholder="请输入邮箱">
+          </div>
+          <div class="field">
+            <label for="contactPhone">手机号</label>
+            <input id="contactPhone" type="tel" placeholder="请输入 11 位手机号">
+          </div>
+          <div class="field">
+            <label for="contactMessage">留言</label>
+            <textarea id="contactMessage" rows="6" placeholder="请填写你的留言内容"></textarea>
+          </div>
+          <p id="contactFeedback" class="feedback" aria-live="polite"></p>
+          <button type="submit" class="btn">提交留言</button>
+        </form>
+      </section>
+      <section id="messageHistory" class="panel detail-card message-history"></section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="container site-footer__inner">
+      <span>课程要求覆盖：联系我们页面 / 数据验证</span>
+      <span>欢迎留下建议</span>
+    </div>
+  </footer>
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/contact.js"></script>
+</body>
+</html>

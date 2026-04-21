@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560">
+    <rect width="1200" height="560" fill="#f7efe4"/>
+    <circle cx="190" cy="150" r="120" fill="#dce8dc" opacity="0.35"/>
+    <circle cx="1000" cy="130" r="92" fill="#e9d7cf" opacity="0.28"/>
+    <path d="M100 360 C260 280 420 330 580 260 C770 180 940 230 1100 170" fill="none" stroke="#7b947c" stroke-width="18" opacity="0.42"/>
+    <path d="M80 430 C250 370 420 440 570 388 C750 324 950 340 1130 280" fill="none" stroke="#1f4d4f" stroke-width="10" opacity="0.22"/>
+    <text x="86" y="124" font-size="56" font-family="Songti SC, STSong, serif" fill="#233332">器物与火候</text>
+    <text x="88" y="186" font-size="24" font-family="PingFang SC, Microsoft YaHei, sans-serif" fill="#58716f">青瓷与纸墨在长卷中苏醒</text>
+  </svg>

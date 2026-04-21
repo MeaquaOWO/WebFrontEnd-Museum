@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 760">
+    <rect width="640" height="760" fill="#f7f2e8"/>
+    <circle cx="320" cy="178" r="118" fill="#ece4d8" opacity="0.28"/>
+    <path d="M138 456 C208 326 432 326 502 456" fill="none" stroke="#1f4d4f" stroke-width="18"/>
+    <path d="M194 188 C242 250 274 302 320 350 C366 302 398 250 446 188" fill="none" stroke="#c8a97e" stroke-width="16"/>
+    <circle cx="260" cy="240" r="22" fill="#1f4d4f"/>
+    <circle cx="380" cy="240" r="22" fill="#1f4d4f"/>
+    <text x="320" y="610" text-anchor="middle" font-size="50" font-family="Songti SC, STSong, serif" fill="#233332">宣纸制作</text>
+    <text x="320" y="664" text-anchor="middle" font-size="22" font-family="PingFang SC, Microsoft YaHei, sans-serif" fill="#58716f">捞纸 · 晒纸 · 润墨成形</text>
+  </svg>
