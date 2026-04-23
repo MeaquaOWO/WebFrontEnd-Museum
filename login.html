@@ -8,20 +8,7 @@
   <link rel="stylesheet" href="assets/css/subpage.css">
 </head>
 <body data-page="login">
-  <header class="site-header">
-    <div class="container site-header__inner">
-      <a class="logo" href="index.html">锦绣非遗</a>
-      <nav class="main-nav" aria-label="主导航">
-        <ul>
-          <li><a data-nav="home" href="index.html">首页</a></li>
-          <li><a data-nav="contact" href="contact.html">关于</a></li>
-        </ul>
-      </nav>
-      <ul class="utility-nav">
-        <li><span data-username>未登录访客</span></li>
-      </ul>
-    </div>
-  </header>
+  <site-header page="login"></site-header>
   <main class="page-main">
     <div class="container subpage-layout">
       <section class="panel form-card">
@@ -43,12 +30,9 @@
       </section>
     </div>
   </main>
-  <footer class="site-footer">
-    <div class="container site-footer__inner">
-      <span>课程要求覆盖：数据验证 / 用户状态</span>
-      <span>页面入口：登录页</span>
-    </div>
-  </footer>
+  <site-footer></site-footer>
+  <script src="assets/js/components/site-header.js"></script>
+  <script src="assets/js/components/site-footer.js"></script>
   <script src="assets/js/common.js"></script>
   <script src="assets/js/login.js"></script>
 </body>
