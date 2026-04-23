@@ -29,13 +29,9 @@
             align-items: center;
             padding: 6px 14px;
             border-radius: 999px;
-            color: #5D897A;
+            color: var(--green);
             background: rgba(255, 255, 255, 0.76);
             border: 1px solid rgba(93, 137, 114, 0.14);
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
           }
           .section-title {
             margin: 4px 0 8px;

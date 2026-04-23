@@ -13,6 +13,7 @@
 .subpage-hero {
   display: grid;
   gap: 16px;
+  place-items: start;
 }
 
 .subpage-hero img,

@@ -30,7 +30,7 @@
     function drawMessages() {
       const messages = window.heritageCommon.readMessages(localStorage);
       historyRoot.innerHTML = `
-        <p class="eyebrow">本地存储</p>
+        <p class="eyebrow">留言墙</p>
         <h2>最近留言</h2>
         ${messages.length
           ? `<div class="message-list">${messages.map((item) => `
