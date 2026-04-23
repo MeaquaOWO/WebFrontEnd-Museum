@@ -118,13 +118,13 @@ test("detail pages expose project metadata", () => {
 
 test("banner and project svg assets exist", () => {
   [
-    "assets/images/banners/banner-1.svg",
-    "assets/images/banners/banner-2.svg",
-    "assets/images/banners/banner-3.svg",
-    "assets/images/categories/opera.svg",
-    "assets/images/projects/celadon.svg",
-    "assets/images/projects/jingju.svg",
-    "assets/images/projects/paper-cut.svg"
+    "assets/images/banners/banner-1.jpg",
+    "assets/images/banners/banner-2.jpg",
+    "assets/images/banners/banner-3.jpg",
+    "assets/images/categories/opera.jpg",
+    "assets/images/projects/celadon.jpg",
+    "assets/images/projects/jingju.jpg",
+    "assets/images/projects/paper-cut.jpg"
   ].forEach((relativePath) => {
     const fullPath = path.join(root, relativePath);
     assert.ok(fs.existsSync(fullPath), `${relativePath} should exist`);

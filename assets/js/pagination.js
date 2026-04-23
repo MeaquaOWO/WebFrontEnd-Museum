@@ -2,25 +2,25 @@
   const catMeta = {
     tradition: {
       title: "传统技艺馆",
-      image: "assets/images/categories/tradition.svg",
+      image: "assets/images/categories/tradition.jpg",
       text: "围绕器物、纸墨与印染，展示东方工艺里的火候和手感。",
       note: "支持分页浏览、拖放收藏和详情预览。"
     },
     folk: {
       title: "民俗馆",
-      image: "assets/images/categories/folk.svg",
+      image: "assets/images/categories/folk.jpg",
       text: "从岁时礼俗和节令经验出发，看见非遗如何嵌入日常生活。",
       note: "可通过预览卡片快速了解节庆背景。"
     },
     opera: {
       title: "戏曲馆",
-      image: "assets/images/categories/opera.svg",
+      image: "assets/images/categories/opera.jpg",
       text: "聚焦唱腔、行当、脸谱和舞台程式，适合结合视频一起看。",
       note: "支持快速预览和详情页继续浏览。"
     },
     handcraft: {
       title: "手工馆",
-      image: "assets/images/categories/handcraft.svg",
+      image: "assets/images/categories/handcraft.jpg",
       text: "从针法、折剪到竹篾编织，展现手工技艺的温度和秩序。",
       note: "推荐配合收藏馆功能生成你的观展路线。"
     }

@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420">
-    <rect width="860" height="420" fill="#fbf7ef"/>
-    <circle cx="160" cy="128" r="88" fill="#dde7ef" opacity="0.30"/>
-    <path d="M70 292 C180 246 302 286 410 240 C540 186 650 212 786 150" fill="none" stroke="#1f4d4f" stroke-width="14" opacity="0.18"/>
-    <text x="78" y="118" font-size="42" font-family="Songti SC, STSong, serif" fill="#233332">戏曲馆</text>
-    <text x="80" y="174" font-size="20" font-family="PingFang SC, Microsoft YaHei, sans-serif" fill="#58716f">在唱念做打之间进入舞台美学</text>
-  </svg>

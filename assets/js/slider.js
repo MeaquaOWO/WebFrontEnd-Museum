@@ -3,21 +3,21 @@
     {
       title: "指尖触碰历史，器物仍有温度",
       text: "在青瓷、宣纸和蓝印花布之间，感受东方工艺如何从材料里长出审美。",
-      image: "assets/images/banners/banner-1.svg",
+      image: "assets/images/banners/banner-1.jpg",
       page: "expo.html?category=tradition",
       buttonLabel: "进入传统技艺馆"
     },
     {
       title: "节令、戏台与日常，共同构成非遗",
       text: "从年俗到京剧，非遗不是陈列在过去的标本，而是仍在发生的生活秩序。",
-      image: "assets/images/banners/banner-2.svg",
+      image: "assets/images/banners/banner-2.jpg",
       page: "expo.html?category=opera",
       buttonLabel: "进入戏曲馆"
     },
     {
       title: "在数字展馆里继续看见手工之美",
       text: "拖动展品、脸谱上色、视频导览和问答助手，让浏览变成一次轻量参与。",
-      image: "assets/images/banners/banner-3.svg",
+      image: "assets/images/banners/banner-3.jpg",
       page: "expo.html?category=handcraft",
       buttonLabel: "进入手工馆"
     }
@@ -58,25 +58,25 @@
       {
         title: "传统技艺",
         page: "expo.html?category=tradition",
-        image: "assets/images/categories/tradition.svg",
+        image: "assets/images/categories/tradition.jpg",
         text: "青瓷、宣纸、蓝印花布，聚焦火候、纤维和染色。"
       },
       {
         title: "民俗",
         page: "expo.html?category=folk",
-        image: "assets/images/categories/folk.svg",
+        image: "assets/images/categories/folk.jpg",
         text: "从春节、端午到节气，理解非遗里的时间感。"
       },
       {
         title: "戏曲",
         page: "expo.html?category=opera",
-        image: "assets/images/categories/opera.svg",
+        image: "assets/images/categories/opera.jpg",
         text: "行当、脸谱和程式动作，是最直观的舞台入口。"
       },
       {
         title: "手工",
         page: "expo.html?category=handcraft",
-        image: "assets/images/categories/handcraft.svg",
+        image: "assets/images/categories/handcraft.jpg",
         text: "剪纸、苏绣、竹编，让手工逻辑被看见。"
       }
     ];
