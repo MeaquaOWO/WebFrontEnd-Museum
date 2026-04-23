@@ -4,7 +4,8 @@
     { name: "竹青绿", value: "#1f4d4f" },
     { name: "描金黄", value: "#d8b25a" },
     { name: "黛蓝", value: "#2f3f63" },
-    { name: "墨黑", value: "#101010" }
+    { name: "墨黑", value: "#101010" },
+    { name: "瓷白", value: "#f5f5f0" }
   ];
 
   function getMaskColors() {
@@ -124,6 +125,34 @@
             <input id="brushRange" type="range" min="2" max="24" value="8">
             <strong id="brushValue">8 px</strong>
           </div>
+          <div class="studio-group studio-tools">
+            <button type="button" class="tool-btn is-on" id="toolBrush" title="画笔">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 19l7-7 3 3-7 7-3-3z"></path>
+                <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+                <path d="M2 2l7.586 7.586"></path>
+                <circle cx="11" cy="11" r="2"></circle>
+              </svg>
+            </button>
+            <button type="button" class="tool-btn" id="toolEraser" title="橡皮擦">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M20 20H7L3 16c-.6-.6-.6-1.5 0-2.1L13.1 3.8c.6-.6 1.5-.6 2.1 0l5.7 5.7c.6.6.6 1.5 0 2.1L12 20"></path>
+                <path d="M6 11l6 6"></path>
+              </svg>
+            </button>
+            <button type="button" class="action-btn" id="undoBtn" title="撤销" disabled>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 7v6h6"></path>
+                <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"></path>
+              </svg>
+            </button>
+            <button type="button" class="action-btn" id="redoBtn" title="重做" disabled>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 7v6h-6"></path>
+                <path d="M3 17a9 9 0 019-9 9 9 0 016 2.3l3 2.7"></path>
+              </svg>
+            </button>
+          </div>
           <button type="button" class="btn btn--secondary" id="clearCanvas">重置脸谱</button>
         </div>
         <div class="studio-board">
@@ -139,6 +168,63 @@
     let color = getMaskColors()[0].value;
     let size = 8;
     let drawing = false;
+    let tool = "brush";
+    const eraserColor = "#fbf7f0";
+
+    const undoStack = [];
+    const redoStack = [];
+    const maxHistory = 20;
+
+    function saveState() {
+      if (undoStack.length >= maxHistory) {
+        undoStack.shift();
+      }
+      undoStack.push(canvas.toDataURL());
+      redoStack.length = 0;
+      updateUndoRedoButtons();
+    }
+
+    function undo() {
+      if (undoStack.length <= 1) {
+        return;
+      }
+      const state = undoStack.pop();
+      redoStack.push(state);
+      const prevState = undoStack[undoStack.length - 1];
+      const img = new Image();
+      img.onload = function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
+        updateUndoRedoButtons();
+      };
+      img.src = prevState;
+    }
+
+    function redo() {
+      if (redoStack.length === 0) {
+        return;
+      }
+      const state = redoStack.pop();
+      undoStack.push(state);
+      const img = new Image();
+      img.onload = function () {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
+        updateUndoRedoButtons();
+      };
+      img.src = state;
+    }
+
+    function updateUndoRedoButtons() {
+      const undoBtn = document.getElementById("undoBtn");
+      const redoBtn = document.getElementById("redoBtn");
+      if (undoBtn) {
+        undoBtn.disabled = undoStack.length <= 1;
+      }
+      if (redoBtn) {
+        redoBtn.disabled = redoStack.length === 0;
+      }
+    }
 
     function point(event) {
       const rect = canvas.getBoundingClientRect();
@@ -161,8 +247,8 @@
       }
 
       const pos = point(event);
-      ctx.strokeStyle = color;
-      ctx.lineWidth = size;
+      ctx.strokeStyle = tool === "eraser" ? eraserColor : color;
+      ctx.lineWidth = tool === "eraser" ? size * 3 : size;
       ctx.lineCap = "round";
       ctx.lineJoin = "round";
       ctx.lineTo(pos.x, pos.y);
@@ -181,10 +267,14 @@
     }
 
     drawBase(ctx, canvas);
+    saveState();
 
     canvas.addEventListener("pointerdown", start);
     canvas.addEventListener("pointermove", move);
-    canvas.addEventListener("pointerup", end);
+    canvas.addEventListener("pointerup", function (e) {
+      saveState();
+      end(e);
+    });
     canvas.addEventListener("pointerleave", end);
 
     root.querySelectorAll("[data-color]").forEach((btn) => {
@@ -202,6 +292,22 @@
 
     document.getElementById("clearCanvas").addEventListener("click", function () {
       drawBase(ctx, canvas);
+      saveState();
+    });
+
+    document.getElementById("undoBtn").addEventListener("click", undo);
+    document.getElementById("redoBtn").addEventListener("click", redo);
+
+    document.getElementById("toolBrush").addEventListener("click", function () {
+      tool = "brush";
+      document.getElementById("toolBrush").classList.add("is-on");
+      document.getElementById("toolEraser").classList.remove("is-on");
+    });
+
+    document.getElementById("toolEraser").addEventListener("click", function () {
+      tool = "eraser";
+      document.getElementById("toolEraser").classList.add("is-on");
+      document.getElementById("toolBrush").classList.remove("is-on");
     });
   }
 
