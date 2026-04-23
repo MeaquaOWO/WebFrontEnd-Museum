@@ -27,11 +27,13 @@ const requiredPaths = [
   "assets/css/global.css",
   "assets/css/home.css",
   "assets/css/subpage.css",
+  "assets/js/assistant-config.js",
   "assets/js/data.js",
   "assets/js/common.js",
   "assets/js/login.js",
   "assets/js/slider.js",
   "assets/js/drag.js",
+  "assets/js/assistant.js",
   "assets/js/canvas.js",
   "assets/js/pagination.js",
   "assets/js/contact.js",
@@ -40,6 +42,7 @@ const requiredPaths = [
   "tests/login.test.js",
   "tests/slider.test.js",
   "tests/drag.test.js",
+  "tests/assistant.test.js",
   "tests/canvas.test.js",
   "tests/pagination.test.js",
   "tests/contact.test.js"
@@ -61,9 +64,26 @@ test("home page wires global and home assets", () => {
   assert.match(html, /assets\/css\/global\.css/);
   assert.match(html, /assets\/css\/home\.css/);
   assert.match(html, /assets\/js\/common\.js/);
+  assert.match(html, /assets\/js\/assistant-config\.js/);
+  assert.match(html, /assets\/js\/assistant\.js/);
   assert.match(html, /data-page="home"/);
   assert.match(html, /id="floatingGuide"/);
+  assert.match(html, /class="side-fix"/);
+  assert.match(html, /id="featuredZone"/);
   assert.match(html, /id="collectionDropzone"/);
+  assert.match(html, /id="aiBox"/);
+});
+
+test("home page keeps guide and collection together in a fixed right rail", () => {
+  const html = read("index.html");
+  assert.match(
+    html,
+    /class="side-fix"[\s\S]*id="floatingGuide"[\s\S]*id="collectionDropzone"[\s\S]*id="featuredZone"[\s\S]*id="featuredExhibits"/
+  );
+  assert.doesNotMatch(
+    html,
+    /id="featuredZone"[\s\S]*id="collectionDropzone"/
+  );
 });
 
 test("login and contact pages expose forms for validation", () => {
@@ -74,6 +94,22 @@ test("login and contact pages expose forms for validation", () => {
 test("category pages expose category metadata", () => {
   assert.match(read("category-opera.html"), /data-category="opera"/);
   assert.match(read("category-tradition.html"), /data-category="tradition"/);
+  assert.match(read("category-tradition.html"), /class="panel list-card main-list"/);
+});
+
+test("category layout stacks sidebar earlier to protect the main content width", () => {
+  const css = read("assets/css/subpage.css");
+  assert.match(css, /\.subpage-layout--side\s*\{\s*grid-template-columns:\s*minmax\(0, 1fr\)\s+240px;/);
+  assert.match(css, /\.subpage-layout--side\s+\.main-list\s*\{\s*grid-column:\s*1;/);
+  assert.match(css, /@media \(max-width: 1120px\)\s*\{\s*\.subpage-layout--side\s*\{\s*grid-template-columns:\s*1fr;/);
+});
+
+test("home drag stage keeps the right rail fixed while the exhibit list stays in the main flow", () => {
+  const css = read("assets/css/home.css");
+  assert.match(css, /\.side-fix\s*\{[\s\S]*position:\s*fixed;/);
+  assert.match(css, /\.side-fix\s*\{[\s\S]*right:\s*24px;/);
+  assert.match(css, /\.side-fix\s*\{[\s\S]*top:\s*112px;/);
+  assert.match(css, /\.drag-stage\s*\{[\s\S]*display:\s*grid;/);
 });
 
 test("detail pages expose project metadata", () => {

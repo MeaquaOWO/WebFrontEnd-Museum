@@ -1,4 +1,31 @@
 (function () {
+  const catMeta = {
+    tradition: {
+      title: "传统技艺馆",
+      image: "assets/images/categories/tradition.svg",
+      text: "围绕器物、纸墨与印染，展示东方工艺里的火候和手感。",
+      note: "支持分页浏览、拖放收藏和详情预览。"
+    },
+    folk: {
+      title: "民俗馆",
+      image: "assets/images/categories/folk.svg",
+      text: "从岁时礼俗和节令经验出发，看见非遗如何嵌入日常生活。",
+      note: "可通过预览卡片快速了解节庆背景。"
+    },
+    opera: {
+      title: "戏曲馆",
+      image: "assets/images/categories/opera.svg",
+      text: "聚焦唱腔、行当、脸谱和舞台程式，适合结合视频一起看。",
+      note: "支持快速预览和详情页继续浏览。"
+    },
+    handcraft: {
+      title: "手工馆",
+      image: "assets/images/categories/handcraft.svg",
+      text: "从针法、折剪到竹篾编织，展现手工技艺的温度和秩序。",
+      note: "推荐配合收藏馆功能生成你的观展路线。"
+    }
+  };
+
   function paginate(items, page, size) {
     const start = (page - 1) * size;
     return items.slice(start, start + size);
@@ -6,6 +33,142 @@
 
   function getTotalPages(totalItems, size) {
     return Math.ceil(totalItems / size);
+  }
+
+  function getCategoryMeta(category) {
+    return catMeta[category] || catMeta.tradition;
+  }
+
+  function getCategoryPage(category) {
+    return `category-${category}.html`;
+  }
+
+  function buildPreviewHtml(item) {
+    if (!item) {
+      return "<p>暂无项目预览。</p>";
+    }
+
+    return `
+      <div class="preview-top">
+        <img src="${item.image}" alt="${item.title}">
+        <div>
+          <p class="eyebrow">快速预览</p>
+          <h2>${item.title}</h2>
+          <p>${item.summary}</p>
+        </div>
+      </div>
+      <div class="preview-grid">
+        <article class="preview-card">
+          <h3>历史渊源</h3>
+          <p>${item.history}</p>
+        </article>
+        <article class="preview-card">
+          <h3>工艺看点</h3>
+          <p>${item.feature}</p>
+        </article>
+        <article class="preview-card">
+          <h3>文化价值</h3>
+          <p>${item.value}</p>
+        </article>
+      </div>
+      <div class="preview-actions">
+        <a class="video-link" href="${item.video}" target="_blank" rel="noreferrer">打开演示视频</a>
+        <a class="btn" href="${item.detailPage}">查看完整详情</a>
+      </div>
+    `;
+  }
+
+  function ensurePreviewBox() {
+    if (typeof document === "undefined") {
+      return null;
+    }
+
+    let modal = document.getElementById("previewModal");
+    if (modal) {
+      return modal;
+    }
+
+    modal = document.createElement("div");
+    modal.id = "previewModal";
+    modal.className = "preview-modal";
+    modal.innerHTML = `
+      <div class="preview-dialog">
+        <button type="button" id="previewClose" class="preview-close" aria-label="关闭预览">×</button>
+        <div id="previewBody"></div>
+      </div>
+    `;
+    document.body.appendChild(modal);
+
+    modal.addEventListener("click", function (event) {
+      if (event.target === modal) {
+        modal.classList.remove("is-open");
+      }
+    });
+
+    modal.querySelector("#previewClose").addEventListener("click", function () {
+      modal.classList.remove("is-open");
+    });
+
+    if (!document.body.dataset.previewEsc) {
+      document.body.dataset.previewEsc = "true";
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          const current = document.getElementById("previewModal");
+          if (current) {
+            current.classList.remove("is-open");
+          }
+        }
+      });
+    }
+
+    return modal;
+  }
+
+  function renderSideBox(category) {
+    const root = document.getElementById("sideBox") || document.querySelector(".subpage-aside");
+    if (!root) {
+      return;
+    }
+
+    root.innerHTML = `
+      <div class="side-nav">
+        <h2>博览导览</h2>
+        <a class="${category === "tradition" ? "is-on" : ""}" href="category-tradition.html">传统技艺</a>
+        <a class="${category === "folk" ? "is-on" : ""}" href="category-folk.html">民俗</a>
+        <a class="${category === "opera" ? "is-on" : ""}" href="category-opera.html">戏曲</a>
+        <a class="${category === "handcraft" ? "is-on" : ""}" href="category-handcraft.html">手工</a>
+      </div>
+      <div class="side-note">
+        <h2>迷你收藏馆</h2>
+        <p>把卡片拖到下方，生成你的个人路线。</p>
+        <div id="miniCollection" class="collection-list collection-dropzone"></div>
+      </div>
+    `;
+  }
+
+  function wirePreviewButtons() {
+    if (typeof document === "undefined" || !window.heritageData) {
+      return;
+    }
+
+    const modal = ensurePreviewBox();
+    const body = modal ? modal.querySelector("#previewBody") : null;
+    if (!modal || !body) {
+      return;
+    }
+
+    document.querySelectorAll("[data-preview]").forEach((btn) => {
+      if (btn.dataset.previewReady === "true") {
+        return;
+      }
+
+      btn.dataset.previewReady = "true";
+      btn.addEventListener("click", function () {
+        const item = window.heritageData.getProjectById(btn.getAttribute("data-preview"));
+        body.innerHTML = buildPreviewHtml(item);
+        modal.classList.add("is-open");
+      });
+    });
   }
 
   function renderCategoryPage() {
@@ -21,88 +184,71 @@
       return;
     }
 
-    const meta = {
-      tradition: {
-        title: "传统技艺馆",
-        image: "assets/images/categories/tradition.svg",
-        text: "观看火候、纸墨、染色与器物之美。"
-      },
-      folk: {
-        title: "民俗馆",
-        image: "assets/images/categories/folk.svg",
-        text: "从节令礼俗和生活秩序理解民俗传统。"
-      },
-      opera: {
-        title: "戏曲馆",
-        image: "assets/images/categories/opera.svg",
-        text: "在唱腔、程式和脸谱中走近戏台世界。"
-      },
-      handcraft: {
-        title: "手工馆",
-        image: "assets/images/categories/handcraft.svg",
-        text: "看见针脚、剪纸和竹编中的手工温度。"
-      }
-    };
-    const info = meta[category];
+    const info = getCategoryMeta(category);
     const items = window.heritageData.getProjectsByCategory(category);
-    let currentPage = 1;
-    const pageSize = 2;
-    const totalPages = getTotalPages(items.length, pageSize);
+    let cur = 1;
+    const size = 2;
+    const total = getTotalPages(items.length, size);
 
     heroRoot.innerHTML = `
-      <p class="eyebrow">分类展馆</p>
+      <p class="eyebrow">博览页</p>
       <div class="detail-meta">
         <img src="${info.image}" alt="${info.title}">
         <div>
           <h1>${info.title}</h1>
           <p>${info.text}</p>
-          <p>本页支持分页导航与拖拽加入收藏馆。</p>
+          <p>${info.note}</p>
         </div>
       </div>
     `;
 
+    renderSideBox(category);
+
     function draw() {
-      const pageItems = paginate(items, currentPage, pageSize);
-      listRoot.innerHTML = pageItems.map((item) => `
+      const list = paginate(items, cur, size);
+      listRoot.innerHTML = list.map((item) => `
         <article class="exhibit-card" draggable="true" data-drag-id="${item.id}">
           <img src="${item.image}" alt="${item.title}">
           <h2>${item.title}</h2>
           <p>${item.summary}</p>
-          <a class="btn btn--secondary" href="${item.detailPage}">查看详情</a>
+          <div class="card-actions">
+            <button type="button" class="btn btn--secondary" data-preview="${item.id}">快速预览</button>
+            <a class="btn" href="${item.detailPage}">查看详情</a>
+          </div>
         </article>
       `).join("");
 
       pagerRoot.innerHTML = `
-        <button type="button" id="pagePrev" ${currentPage === 1 ? "disabled" : ""}>上一页</button>
-        ${Array.from({ length: totalPages }, (_, index) => `
-          <button type="button" data-page="${index + 1}" class="${index + 1 === currentPage ? "is-active" : ""}">
-            ${index + 1}
-          </button>
-        `).join("")}
-        <button type="button" id="pageNext" ${currentPage === totalPages ? "disabled" : ""}>下一页</button>
+        <button type="button" id="pagePrev" ${cur === 1 ? "disabled" : ""}>上一页</button>
+        ${Array.from({ length: total }, function (_, idx) {
+          return `<button type="button" data-page="${idx + 1}" class="${idx + 1 === cur ? "is-active" : ""}">${idx + 1}</button>`;
+        }).join("")}
+        <button type="button" id="pageNext" ${cur === total ? "disabled" : ""}>下一页</button>
       `;
 
       const prev = document.getElementById("pagePrev");
       const next = document.getElementById("pageNext");
       if (prev) {
         prev.addEventListener("click", function () {
-          currentPage -= 1;
+          cur -= 1;
           draw();
         });
       }
       if (next) {
         next.addEventListener("click", function () {
-          currentPage += 1;
+          cur += 1;
           draw();
         });
       }
-      pagerRoot.querySelectorAll("[data-page]").forEach((button) => {
-        button.addEventListener("click", function () {
-          currentPage = Number(button.getAttribute("data-page"));
+
+      pagerRoot.querySelectorAll("[data-page]").forEach((btn) => {
+        btn.addEventListener("click", function () {
+          cur = Number(btn.getAttribute("data-page"));
           draw();
         });
       });
 
+      wirePreviewButtons();
       if (window.heritageDrag) {
         window.heritageDrag.bindCollection();
       }
@@ -131,13 +277,14 @@
     }
 
     hero.innerHTML = `
-      <p class="eyebrow">项目详情</p>
+      <p class="eyebrow">详情页</p>
       <div class="detail-meta">
         <img src="${item.image}" alt="${item.title}">
         <div>
           <h1>${item.title}</h1>
           <p>${item.summary}</p>
-          <p>所属分类：${item.category === "tradition" ? "传统技艺" : item.category === "folk" ? "民俗" : item.category === "opera" ? "戏曲" : "手工"}</p>
+          <p>所属展馆：${getCategoryMeta(item.category).title}</p>
+          <a class="btn btn--secondary" href="${getCategoryPage(item.category)}">继续浏览同馆</a>
         </div>
       </div>
     `;
@@ -149,7 +296,7 @@
           <p>${item.history}</p>
         </section>
         <section>
-          <h2>技艺特点</h2>
+          <h2>工艺特点</h2>
           <p>${item.feature}</p>
         </section>
         <section>
@@ -161,12 +308,12 @@
 
     video.innerHTML = `
       <h2>视频演示</h2>
-      <p>点击按钮跳转到项目视频，查看技艺演示或舞台片段。</p>
+      <p>点击按钮打开外部视频，查看制作工序或舞台片段。</p>
       <a class="video-link" href="${item.video}" target="_blank" rel="noreferrer">打开演示视频</a>
     `;
 
     related.innerHTML = `
-      <h2>同类推荐</h2>
+      <h2>相关项目</h2>
       <div class="related-grid">
         ${window.heritageData.getRelatedProjects(id).map((entry) => `
           <article class="exhibit-card">
@@ -182,6 +329,8 @@
   const api = {
     paginate,
     getTotalPages,
+    getCategoryMeta,
+    buildPreviewHtml,
     renderCategoryPage,
     renderDetailPage
   };

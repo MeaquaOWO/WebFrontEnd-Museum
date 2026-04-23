@@ -30,9 +30,16 @@
     function drawMessages() {
       const messages = window.heritageCommon.readMessages(localStorage);
       historyRoot.innerHTML = `
+        <p class="eyebrow">本地存储</p>
         <h2>最近留言</h2>
         ${messages.length
-          ? `<ul>${messages.map((item) => `<li><strong>${item.name}</strong>：${item.message}</li>`).join("")}</ul>`
+          ? `<div class="message-list">${messages.map((item) => `
+              <article class="msg-card">
+                <h3>${item.name}</h3>
+                <p>${item.message}</p>
+                <span>${item.time || "刚刚留言"}</span>
+              </article>
+            `).join("")}</div>`
           : "<p>还没有新的留言记录。</p>"}
       `;
     }
@@ -55,6 +62,9 @@
         return;
       }
 
+      values.time = new Date().toLocaleString("zh-CN", {
+        hour12: false
+      });
       const next = [values].concat(window.heritageCommon.readMessages(localStorage)).slice(0, 6);
       window.heritageCommon.saveMessages(localStorage, next);
       form.reset();

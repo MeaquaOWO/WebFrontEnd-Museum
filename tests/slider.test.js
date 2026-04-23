@@ -31,3 +31,10 @@ test("each hero slide uses a category-specific call-to-action label", () => {
     ]
   );
 });
+
+test("hero markup keeps dots but removes previous next buttons", () => {
+  const html = sliderApi.buildHeroMarkup();
+  assert.doesNotMatch(html, /heroPrev/);
+  assert.doesNotMatch(html, /heroNext/);
+  assert.match(html, /hero-dots/);
+});

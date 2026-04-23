@@ -15,7 +15,8 @@
   gap: 16px;
 }
 
-.subpage-hero img {
+.subpage-hero img,
+.preview-top img {
   width: 100%;
   max-width: 320px;
   border-radius: 18px;
@@ -32,9 +33,9 @@
   width: 100%;
   min-height: 46px;
   padding: 0 14px;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(49, 72, 94, 0.12);
   border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.86);
 }
 
 .field textarea {
@@ -47,37 +48,71 @@
   margin: 8px 0 0;
 }
 
+.contact-grid,
+.team-grid,
 .category-grid,
 .related-grid,
-.contact-grid {
+.detail-sections,
+.preview-grid,
+.message-list {
   display: grid;
   gap: 18px;
 }
 
-.category-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.detail-meta {
-  display: grid;
-  grid-template-columns: minmax(240px, 320px) 1fr;
-  gap: 22px;
+.subpage-layout--side {
+  grid-template-columns: minmax(0, 1fr) 240px;
   align-items: start;
 }
 
-.detail-sections {
+.subpage-layout--side .subpage-hero,
+.subpage-layout--side .main-list {
+  grid-column: 1;
+}
+
+.subpage-layout--side .subpage-aside {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+.main-list {
+  min-width: 0;
+}
+
+.category-grid,
+.contact-grid,
+.team-grid,
+.related-grid,
+.preview-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detail-meta,
+.preview-top,
+.preview-actions,
+.side-nav {
   display: grid;
-  gap: 16px;
+  gap: 20px;
+}
+
+.detail-meta,
+.preview-top {
+  grid-template-columns: minmax(240px, 320px) 1fr;
+  align-items: start;
+}
+
+.card-actions {
+  margin-top: 14px;
 }
 
 .video-link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 44px;
   padding: 0 18px;
   border-radius: 999px;
   color: #fff;
-  background: linear-gradient(135deg, var(--red), #8b3d34);
+  background: linear-gradient(135deg, var(--blue), #213244);
 }
 
 .pager {
@@ -92,24 +127,111 @@
   min-height: 44px;
   border: 0;
   border-radius: 999px;
-  background: rgba(35, 51, 50, 0.08);
+  color: var(--blue);
+  background: rgba(49, 72, 94, 0.08);
 }
 
 .pager button.is-active {
-  background: linear-gradient(135deg, var(--gold), var(--red));
   color: #fff;
+  background: linear-gradient(135deg, var(--red), var(--gold));
 }
 
-.message-history ul,
-.collection-list ul {
-  margin: 0;
-  padding-left: 18px;
+.subpage-aside {
+  display: grid;
+  gap: 18px;
+}
+
+.side-nav a {
+  display: block;
+  padding: 12px 14px;
+  border-radius: 14px;
+  color: var(--blue);
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.side-nav a.is-on {
+  color: #fff;
+  background: linear-gradient(135deg, var(--blue), #243547);
+}
+
+.side-note,
+.team-card,
+.msg-card,
+.preview-card {
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(49, 72, 94, 0.08);
+}
+
+.msg-card span {
+  color: var(--ink-mute);
+  font-size: 13px;
+}
+
+.preview-modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  place-items: center;
+  padding: 24px;
+  background: rgba(36, 53, 71, 0.42);
+  z-index: 80;
+}
+
+.preview-modal.is-open {
+  display: grid;
+}
+
+.preview-dialog {
+  position: relative;
+  width: min(900px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  padding: 28px;
+  border-radius: var(--radius-xl);
+  background: #f9f5ee;
+  box-shadow: 0 24px 48px rgba(36, 53, 71, 0.18);
+}
+
+.preview-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  color: var(--blue);
+  background: rgba(49, 72, 94, 0.08);
+}
+
+.preview-actions {
+  grid-template-columns: repeat(2, minmax(0, max-content));
+  justify-content: start;
+  margin-top: 18px;
+}
+
+@media (max-width: 1120px) {
+  .subpage-layout--side {
+    grid-template-columns: 1fr;
+  }
+
+  .subpage-layout--side .subpage-aside {
+    grid-column: auto;
+    grid-row: auto;
+  }
 }
 
 @media (max-width: 820px) {
   .category-grid,
+  .contact-grid,
+  .team-grid,
+  .related-grid,
   .detail-meta,
-  .contact-grid {
+  .preview-top,
+  .preview-grid,
+  .preview-actions {
     grid-template-columns: 1fr;
   }
 }

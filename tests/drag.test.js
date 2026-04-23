@@ -13,9 +13,9 @@ test("addUniqueItem appends only unseen exhibits", () => {
   );
 });
 
-test("getGuideLinks exposes the three home navigation anchors", () => {
+test("getGuideLinks exposes the four home navigation anchors", () => {
   assert.deepEqual(
     dragApi.getGuideLinks().map((item) => item.href),
-    ["#hero", "#featuredExhibits", "#heritageStudio"]
+    ["#hero", "#featuredExhibits", "#heritageStudio", "#aiBox"]
   );
 });

@@ -3,7 +3,8 @@
     return [
       { href: "#hero", label: "卷首导览" },
       { href: "#featuredExhibits", label: "精选展品" },
-      { href: "#heritageStudio", label: "互动创作" }
+      { href: "#heritageStudio", label: "脸谱工坊" },
+      { href: "#aiBox", label: "智库问答" }
     ];
   }
 
@@ -17,8 +18,8 @@
     }
 
     target.innerHTML = items.length
-      ? `<ul>${items.map((item) => `<li>${item.title}</li>`).join("")}</ul>`
-      : "<p>将展品拖入这里，生成你的收藏馆。</p>";
+      ? `<ul class="collection-items">${items.map((item) => `<li>${item.title}</li>`).join("")}</ul>`
+      : '<p class="side-empty">把感兴趣的展品拖到这里。</p>';
   }
 
   function renderFloatingGuide() {
@@ -32,11 +33,12 @@
     }
 
     root.innerHTML = `
-      <h2>侧边展品导览</h2>
-      <ul>
-        ${getGuideLinks().map((item) => `<li><a href="${item.href}">${item.label}</a></li>`).join("")}
+      <p class="side-kicker">导览索引</p>
+      <h2 class="side-title">右侧导览</h2>
+      <ul class="side-nav">
+        ${getGuideLinks().map((item, idx) => `<li><a href="${item.href}"><span>0${idx + 1}</span>${item.label}</a></li>`).join("")}
       </ul>
-      <p>滚动页面时仍可快速跳转到重点展区。</p>
+      <p class="side-note">滚动时可直接跳到首页重点展区。</p>
     `;
   }
 
@@ -54,19 +56,18 @@
     ].map((id) => window.heritageData.getProjectById(id)).filter(Boolean);
 
     root.innerHTML = `
-      <div style="padding: 28px;">
-        <p class="eyebrow">精选展品</p>
-        <h2 class="section-title">拖动展品进入收藏馆</h2>
-        <div class="featured-grid">
-          ${featured.map((item) => `
-            <article class="exhibit-card" draggable="true" data-drag-id="${item.id}">
-              <img src="${item.image}" alt="${item.title}">
-              <h3>${item.title}</h3>
-              <p>${item.summary}</p>
-              <a class="btn btn--secondary" href="${item.detailPage}">查看详情</a>
-            </article>
-          `).join("")}
-        </div>
+      <p class="eyebrow">推荐非遗概览</p>
+      <h2 class="section-title">拖动展品加入你的收藏馆</h2>
+      <p class="drag-note">把感兴趣的展品拖到右侧收藏馆，快速整理你的观展路线。</p>
+      <div class="featured-grid">
+        ${featured.map((item) => `
+          <article class="exhibit-card" draggable="true" data-drag-id="${item.id}">
+            <img src="${item.image}" alt="${item.title}">
+            <h3>${item.title}</h3>
+            <p>${item.summary}</p>
+            <a class="btn btn--secondary" href="${item.detailPage}">查看详情</a>
+          </article>
+        `).join("")}
       </div>
     `;
   }
@@ -86,8 +87,9 @@
     }
 
     dropzone.innerHTML = `
-      <h2 class="section-title">我的收藏馆</h2>
-      <p>把你感兴趣的展品拖拽到这里，生成个人观展路线。</p>
+      <p class="side-kicker">个人路线</p>
+      <h2 class="side-title">我的收藏馆</h2>
+      <p class="side-note">拖入展品后，这里会自动生成你的收藏清单。</p>
       <div id="collectionList" class="collection-list"></div>
     `;
   }

@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>传统技艺馆 · 墨韵薪传</title>
+  <title>传统技艺馆 · 锦绣非遗</title>
   <link rel="stylesheet" href="assets/css/global.css">
   <link rel="stylesheet" href="assets/css/subpage.css">
 </head>
 <body data-page="tradition" data-category="tradition">
   <header class="site-header">
     <div class="container site-header__inner">
-      <a class="logo" href="index.html">墨韵薪传</a>
+      <a class="logo" href="index.html">锦绣非遗</a>
       <nav class="main-nav" aria-label="主导航">
         <ul>
           <li><a data-nav="home" href="index.html">首页</a></li>
@@ -18,7 +18,7 @@
           <li><a data-nav="folk" href="category-folk.html">民俗</a></li>
           <li><a data-nav="opera" href="category-opera.html">戏曲</a></li>
           <li><a data-nav="handcraft" href="category-handcraft.html">手工</a></li>
-          <li><a data-nav="contact" href="contact.html">联系</a></li>
+          <li><a data-nav="contact" href="contact.html">关于</a></li>
         </ul>
       </nav>
       <ul class="utility-nav">
@@ -30,16 +30,13 @@
     </div>
   </header>
   <main class="page-main">
-    <div class="container subpage-layout">
+    <div class="container subpage-layout subpage-layout--side">
       <section class="panel subpage-hero"></section>
-      <section class="panel list-card">
+      <section class="panel list-card main-list">
         <div id="categoryList" class="category-grid"></div>
         <div class="pager" id="pager"></div>
       </section>
-      <aside class="panel list-card">
-        <h2>迷你收藏馆</h2>
-        <div id="miniCollection" class="collection-list collection-dropzone"></div>
-      </aside>
+      <aside id="sideBox" class="panel list-card subpage-aside"></aside>
     </div>
   </main>
   <footer class="site-footer">

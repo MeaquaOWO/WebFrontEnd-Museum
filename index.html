@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>墨韵薪传 · 非遗文化数字展览馆</title>
+  <title>锦绣非遗 · 数字展览馆</title>
   <link rel="stylesheet" href="assets/css/global.css">
   <link rel="stylesheet" href="assets/css/home.css">
 </head>
 <body data-page="home">
   <header class="site-header">
     <div class="container site-header__inner">
-      <a class="logo" href="index.html">墨韵薪传</a>
+      <a class="logo" href="index.html">锦绣非遗</a>
       <nav class="main-nav" aria-label="主导航">
         <ul>
           <li><a data-nav="home" href="index.html">首页</a></li>
@@ -18,7 +18,7 @@
           <li><a data-nav="folk" href="category-folk.html">民俗</a></li>
           <li><a data-nav="opera" href="category-opera.html">戏曲</a></li>
           <li><a data-nav="handcraft" href="category-handcraft.html">手工</a></li>
-          <li><a data-nav="contact" href="contact.html">联系</a></li>
+          <li><a data-nav="contact" href="contact.html">关于</a></li>
         </ul>
       </nav>
       <ul class="utility-nav">
@@ -31,20 +31,25 @@
   </header>
   <main class="page-main">
     <div class="container home-layout">
-      <aside id="floatingGuide" class="panel floating-guide"></aside>
+      <aside class="side-fix" aria-label="右侧工具栏">
+        <div id="floatingGuide" class="panel floating-guide"></div>
+        <div id="collectionDropzone" class="panel collection collection-dropzone"></div>
+      </aside>
       <section id="hero" class="panel hero"></section>
       <section id="categoryEntrances" class="panel section-block"></section>
       <section id="storyScroll" class="panel section-block"></section>
-      <section id="featuredExhibits" class="panel section-block"></section>
+      <section id="featuredZone" class="panel section-block drag-stage">
+        <div id="featuredExhibits"></div>
+      </section>
       <section id="videoSpotlight" class="panel section-block"></section>
       <section id="heritageStudio" class="panel studio"></section>
-      <section id="collectionDropzone" class="panel collection collection-dropzone"></section>
+      <section id="aiBox" class="panel ai-box"></section>
     </div>
   </main>
   <footer class="site-footer">
     <div class="container site-footer__inner">
-      <span>© 2026 墨韵薪传 · Web 前端开发课程作品</span>
-      <span>技术支持：HTML5 / CSS / JavaScript</span>
+      <span>© 2026 锦绣非遗 · Web 前端课程作品</span>
+      <span>技术支持：HTML5 / CSS3 / JavaScript</span>
     </div>
   </footer>
   <script src="assets/js/data.js"></script>
@@ -52,5 +57,7 @@
   <script src="assets/js/slider.js"></script>
   <script src="assets/js/drag.js"></script>
   <script src="assets/js/canvas.js"></script>
+  <script src="assets/js/assistant-config.js"></script>
+  <script src="assets/js/assistant.js"></script>
 </body>
 </html>
