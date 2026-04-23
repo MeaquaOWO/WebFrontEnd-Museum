@@ -104,11 +104,11 @@
           }
           .puzzle-board {
             position: relative;
-            width: 306px;
-            height: 306px;
+            width: 302px;
+            height: 302px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 2px;
+            gap: 0;
             background: rgba(49, 72, 94, 0.1);
             border-radius: 8px;
             overflow: hidden;
@@ -116,10 +116,8 @@
           .puzzle-piece {
             width: 100px;
             height: 100px;
-            background-size: 300px 300px;
             cursor: pointer;
             transition: transform 0.15s ease, box-shadow 0.15s ease;
-            border-radius: 4px;
             box-sizing: border-box;
           }
           .puzzle-piece:hover:not(.empty):not(.completed) {
@@ -274,10 +272,23 @@
           const piece = document.createElement('div');
           piece.className = 'puzzle-piece';
           piece.dataset.index = index;
-          
+
           if (!isLast) {
-            piece.style.backgroundImage = `url(${this.selectedProject.image})`;
-            piece.style.backgroundPosition = `-${col * size}px -${row * size}px`;
+            const image = new Image();
+            image.onload = () => {
+              piece.style.backgroundImage = `url(${image.src})`;
+              const size = 300 / this.gridSize;
+              let scale = 1;
+              if (image.width < image.height) {
+                scale = 300 / image.width;
+                piece.style.backgroundPosition = `${-col * size}px ${-(image.height - image.width) * scale / 2 - row * size}px`;
+              } else {
+                scale = 300 / image.height;
+                piece.style.backgroundPosition = `${-(image.width - image.height) * scale / 2 - col * size}px ${-row * size}px`;
+              }
+              piece.style.backgroundSize = `${image.width * scale}px ${image.height * scale}px`;
+            };
+            image.src = this.selectedProject.image;
           } else {
             piece.classList.add('empty');
           }
@@ -302,47 +313,95 @@
       const sortedPieces = [...this.pieces].sort((a, b) => {
         return a.currentRow - b.currentRow || a.currentCol - b.currentCol;
       });
-      
+
       const board = this.shadowRoot.getElementById('puzzleBoard');
       board.innerHTML = '';
-      
+
       sortedPieces.forEach(piece => {
         board.appendChild(piece.element);
       });
     }
 
     shuffle() {
-      for (let i = this.pieces.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        
-        const tempRow = this.pieces[i].currentRow;
-        const tempCol = this.pieces[i].currentCol;
-        this.pieces[i].currentRow = this.pieces[j].currentRow;
-        this.pieces[i].currentCol = this.pieces[j].currentCol;
-        this.pieces[j].currentRow = tempRow;
-        this.pieces[j].currentCol = tempCol;
+      const size = this.gridSize;
+      const totalPieces = size * size;
+      const emptyIndex = totalPieces - 1;
+
+      let numArr = [];
+      for (let i = 0; i < totalPieces; i++) {
+        numArr.push(i);
       }
 
-      const emptyPiece = this.pieces.find(p => p.isEmpty);
-      if (emptyPiece && emptyPiece.currentRow === this.gridSize - 1 && emptyPiece.currentCol === this.gridSize - 1) {
-        const firstNonEmpty = this.pieces.find(p => !p.isEmpty);
-        if (firstNonEmpty) {
-          const tempRow = emptyPiece.currentRow;
-          const tempCol = emptyPiece.currentCol;
-          emptyPiece.currentRow = firstNonEmpty.currentRow;
-          emptyPiece.currentCol = firstNonEmpty.currentCol;
-          firstNonEmpty.currentRow = tempRow;
-          firstNonEmpty.currentCol = tempCol;
+      for (let i = numArr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [numArr[i], numArr[j]] = [numArr[j], numArr[i]];
+      }
+
+      const numArrWithoutEmpty = numArr.filter(i => i !== emptyIndex);
+      const inversions = this.countInversions(numArrWithoutEmpty);
+      const emptyPos = numArr.indexOf(emptyIndex);
+      const emptyRow = Math.floor(emptyPos / size);
+      const isSolvable = this.checkSolvability(inversions, emptyRow, size);
+
+      if (!isSolvable) {
+        const temp = numArrWithoutEmpty[0];
+        numArrWithoutEmpty[0] = numArrWithoutEmpty[1];
+        numArrWithoutEmpty[1] = temp;
+
+        let idx = 0;
+        for (let i = 0; i < totalPieces; i++) {
+          if (i === totalPieces - 1) {
+            numArr[i] = emptyIndex;
+          } else {
+            numArr[i] = numArrWithoutEmpty[idx++];
+          }
         }
       }
+
+      const newPositions = [];
+      newPositions.length = totalPieces;
+      for (let i = 0; i < totalPieces; i++) {
+        newPositions[numArr[i]] = { row: Math.floor(i / size), col: i % size };
+      }
+
+      this.pieces.forEach((piece, i) => {
+        piece.currentRow = newPositions[i].row;
+        piece.currentCol = newPositions[i].col;
+      });
 
       this.updatePositions();
       this.checkComplete();
     }
 
+    countInversions(numArr) {
+      let inversions = 0;
+      for (let i = 0; i < numArr.length; i++) {
+        for (let j = i + 1; j < numArr.length; j++) {
+          if (numArr[i] > numArr[j]) {
+            inversions++;
+          }
+        }
+      }
+      return inversions;
+    }
+
+    checkSolvability(inversions, emptyRow, size) {
+      const emptyRowFromBottom = size - emptyRow;
+
+      if (size % 2 === 1) {
+        return inversions % 2 === 0;
+      } else {
+        if (emptyRowFromBottom % 2 === 1) {
+          return inversions % 2 === 0;
+        } else {
+          return inversions % 2 === 1;
+        }
+      }
+    }
+
     bindEvents() {
       const board = this.shadowRoot.getElementById('puzzleBoard');
-      
+
       board.addEventListener('click', (e) => {
         if (this.isComplete) return;
 
@@ -395,7 +454,7 @@
     }
 
     checkComplete() {
-      const isComplete = this.pieces.every(piece => 
+      const isComplete = this.pieces.every(piece =>
         piece.currentRow * this.gridSize + piece.currentCol === piece.correctIndex
       );
 
@@ -412,9 +471,21 @@
       if (emptyPiece) {
         emptyPiece.element.classList.remove('empty');
         emptyPiece.element.classList.add('completed');
-        emptyPiece.element.style.backgroundImage = `url(${this.selectedProject.image})`;
-        const size = 300 / this.gridSize;
-        emptyPiece.element.style.backgroundPosition = `-${(this.gridSize - 1) * size}px -${(this.gridSize - 1) * size}px`;
+        const image = new Image();
+        image.onload = () => {
+          emptyPiece.element.style.backgroundImage = `url(${image.src})`;
+          const size = 300 / this.gridSize;
+          let scale = 1;
+          if (image.width < image.height) {
+            scale = 300 / image.width;
+            emptyPiece.element.style.backgroundPosition = `${-(this.gridSize - 1) * size}px ${-(image.height - image.width) * scale / 2 - (this.gridSize - 1) * size}px`;
+          } else {
+            scale = 300 / image.height;
+            emptyPiece.element.style.backgroundPosition = `${-(image.width - image.height) * scale / 2 - (this.gridSize - 1) * size}px ${-(this.gridSize - 1) * size}px`;
+          }
+          emptyPiece.element.style.backgroundSize = `${image.width * scale}px ${image.height * scale}px`;
+        };
+        image.src = this.selectedProject.image;
       }
 
       this.pieces.forEach(piece => {
