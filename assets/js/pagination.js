@@ -82,7 +82,7 @@
         </article>
       </div>
       <div class="preview-actions">
-        <a class="video-link" href="${item.video}" target="_blank" rel="noreferrer">打开演示视频</a>
+        <button type="button" class="video-link" data-video="${item.video}">打开演示视频</button>
         <a class="btn" href="detail.html?id=${item.id}">查看完整详情</a>
       </div>
     `;
@@ -178,6 +178,19 @@
         body.innerHTML = buildPreviewHtml(item);
         modal.classList.add("is-open");
       });
+    });
+  }
+
+  function initVideoModal() {
+    document.body.addEventListener('click', (e) => {
+      const btn = e.target.closest('.video-link');
+      if (btn) {
+        e.preventDefault();
+        const videoUrl = btn.dataset.video;
+        if (videoUrl && typeof VideoModal !== 'undefined') {
+          VideoModal.show(videoUrl);
+        }
+      }
     });
   }
 
@@ -320,7 +333,7 @@
     video.innerHTML = `
       <h2>视频演示</h2>
       <p>点击按钮打开外部视频，查看制作工序或舞台片段。</p>
-      <a class="video-link" href="${item.video}" target="_blank" rel="noreferrer">打开演示视频</a>
+      <button type="button" class="video-link" data-video="${item.video}">打开演示视频</button>
     `;
 
     related.innerHTML = `
@@ -357,10 +370,12 @@
         document.addEventListener("DOMContentLoaded", function () {
           renderCategoryPage();
           renderDetailPage();
+          initVideoModal();
         });
       } else {
         renderCategoryPage();
         renderDetailPage();
+        initVideoModal();
       }
     }
   }
