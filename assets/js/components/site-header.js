@@ -39,8 +39,8 @@ class SiteHeader extends HTMLElement {
     const fullUtility = `
       <ul class="utility-nav">
         <li><span data-username>未登录访客</span></li>
-        <li><a href="login.html">登录</a></li>
-        <li><a href="#" data-logout>退出</a></li>
+        <li data-login-link><a href="login.html">登录</a></li>
+        <li data-logout-link style="display:none"><a href="#" data-logout>退出</a></li>
         <li><span>收藏 <strong data-collection-count>0</strong></span></li>
       </ul>
     `;
@@ -168,6 +168,18 @@ class SiteHeader extends HTMLElement {
 
     const username = this.getUsername();
     target.textContent = username ? `欢迎你，${username}` : '未登录访客';
+
+    const loginLink = this.shadowRoot.querySelector('[data-login-link]');
+    const logoutLink = this.shadowRoot.querySelector('[data-logout-link]');
+    if (loginLink && logoutLink) {
+      if (username) {
+        loginLink.style.display = 'none';
+        logoutLink.style.display = 'block';
+      } else {
+        loginLink.style.display = 'block';
+        logoutLink.style.display = 'none';
+      }
+    }
   }
 
   updateCollectionBadge() {
