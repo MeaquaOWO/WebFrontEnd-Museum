@@ -33,14 +33,61 @@
       return;
     }
 
+    root.classList.add("panel--guide");
     root.innerHTML = `
       <p class="side-kicker">导览索引</p>
-      <h2 class="side-title">右侧导览</h2>
+      <h2 class="side-title">导览</h2>
       <ul class="side-nav">
         ${getGuideLinks().map((item, idx) => `<li><a href="${item.href}"><span>0${idx + 1}</span>${item.label}</a></li>`).join("")}
       </ul>
-      <p class="side-note">滚动时可直接跳到首页重点展区。</p>
     `;
+  }
+
+  function renderSideTabs() {
+    const sideFix = document.querySelector(".side-fix");
+    if (!sideFix) {
+      return;
+    }
+
+    let tabsContainer = sideFix.querySelector(".side-fix__tabs");
+    if (!tabsContainer) {
+      tabsContainer = document.createElement("div");
+      tabsContainer.className = "side-fix__tabs";
+      sideFix.insertBefore(tabsContainer, sideFix.firstChild);
+    }
+
+    tabsContainer.innerHTML = `
+      <button type="button" class="side-tab is-active" data-tab="guide">导览</button>
+      <button type="button" class="side-tab" data-tab="collection">收藏馆</button>
+    `;
+  }
+
+  function bindTabSwitch() {
+    const sideFix = document.querySelector(".side-fix");
+    if (!sideFix) {
+      return;
+    }
+
+    const tabs = sideFix.querySelectorAll(".side-tab");
+    const guidePanel = sideFix.querySelector(".panel--guide");
+    const collectionPanel = sideFix.querySelector(".panel--collection");
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", function () {
+        const tabName = tab.dataset.tab;
+
+        tabs.forEach((t) => t.classList.remove("is-active"));
+        tab.classList.add("is-active");
+
+        if (tabName === "guide") {
+          guidePanel.classList.remove("hidden");
+          collectionPanel.classList.add("hidden");
+        } else {
+          guidePanel.classList.add("hidden");
+          collectionPanel.classList.remove("hidden");
+        }
+      });
+    });
   }
 
   function renderFeaturedExhibits() {
@@ -87,6 +134,7 @@
       return;
     }
 
+    dropzone.classList.add("panel--collection", "hidden");
     dropzone.innerHTML = `
       <p class="side-kicker">个人路线</p>
       <h2 class="side-title">我的收藏馆</h2>
@@ -142,6 +190,8 @@
     renderFloatingGuide();
     renderFeaturedExhibits();
     ensureCollectionBox();
+    renderSideTabs();
+    bindTabSwitch();
     renderCollection(getListRoot(), window.heritageCommon.readCollection(localStorage));
     wireCards();
     wireDropTarget();
