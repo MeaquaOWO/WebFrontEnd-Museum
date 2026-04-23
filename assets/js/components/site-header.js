@@ -15,6 +15,9 @@ class SiteHeader extends HTMLElement {
 
   render() {
     const isLoginPage = this.pageType === 'login';
+    const isLoggedIn = typeof localStorage !== 'undefined' && localStorage.getItem('heritage.username');
+    const showFullNav = !isLoginPage && isLoggedIn;
+    
     const fullNav = `
       <nav class="main-nav" aria-label="主导航">
         <ul>
@@ -47,6 +50,7 @@ class SiteHeader extends HTMLElement {
     const simpleUtility = `
       <ul class="utility-nav">
         <li><span data-username>未登录访客</span></li>
+        <li data-login-link><a href="login.html">登录</a></li>
       </ul>
     `;
 
@@ -135,8 +139,8 @@ class SiteHeader extends HTMLElement {
       <header class="site-header">
         <div class="container site-header__inner">
           <a class="logo" href="index.html">锦绣非遗</a>
-          ${isLoginPage ? simpleNav : fullNav}
-          ${isLoginPage ? simpleUtility : fullUtility}
+          ${showFullNav ? fullNav : simpleNav}
+          ${showFullNav ? fullUtility : simpleUtility}
         </div>
       </header>
     `;
