@@ -14,9 +14,9 @@ test("each hero slide points to its own exhibition page", () => {
   assert.deepEqual(
     sliderApi.slides.map((slide) => slide.page),
     [
-      "category-tradition.html",
-      "category-opera.html",
-      "category-handcraft.html"
+      "expo.html?category=tradition",
+      "expo.html?category=opera",
+      "expo.html?category=handcraft"
     ]
   );
 });

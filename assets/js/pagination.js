@@ -35,12 +35,22 @@
     return Math.ceil(totalItems / size);
   }
 
+  function getCategoryFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("category") || "tradition";
+  }
+
   function getCategoryMeta(category) {
     return catMeta[category] || catMeta.tradition;
   }
 
   function getCategoryPage(category) {
-    return `category-${category}.html`;
+    return `expo.html?category=${category}`;
+  }
+
+  function updatePageTitle(category) {
+    const info = getCategoryMeta(category);
+    document.title = `${info.title} · 锦绣非遗`;
   }
 
   function buildPreviewHtml(item) {
@@ -133,10 +143,10 @@
     root.innerHTML = `
       <div class="side-nav">
         <h2>博览导览</h2>
-        <a class="${category === "tradition" ? "is-on" : ""}" href="category-tradition.html">传统技艺</a>
-        <a class="${category === "folk" ? "is-on" : ""}" href="category-folk.html">民俗</a>
-        <a class="${category === "opera" ? "is-on" : ""}" href="category-opera.html">戏曲</a>
-        <a class="${category === "handcraft" ? "is-on" : ""}" href="category-handcraft.html">手工</a>
+        <a class="${category === "tradition" ? "is-on" : ""}" href="expo.html?category=tradition">传统技艺</a>
+        <a class="${category === "folk" ? "is-on" : ""}" href="expo.html?category=folk">民俗</a>
+        <a class="${category === "opera" ? "is-on" : ""}" href="expo.html?category=opera">戏曲</a>
+        <a class="${category === "handcraft" ? "is-on" : ""}" href="expo.html?category=handcraft">手工</a>
       </div>
       <div class="side-note">
         <h2>迷你收藏馆</h2>
@@ -176,7 +186,7 @@
       return;
     }
 
-    const category = document.body.getAttribute("data-category");
+    const category = getCategoryFromUrl();
     const listRoot = document.getElementById("categoryList");
     const pagerRoot = document.getElementById("pager");
     const heroRoot = document.querySelector(".subpage-hero");
@@ -184,6 +194,7 @@
       return;
     }
 
+    updatePageTitle(category);
     const info = getCategoryMeta(category);
     const items = window.heritageData.getProjectsByCategory(category);
     let cur = 1;

@@ -19,7 +19,7 @@ class SiteHeader extends HTMLElement {
       <nav class="main-nav" aria-label="主导航">
         <ul>
           <li><a data-nav="home" href="index.html">首页</a></li>
-          <li><a data-nav="expo" href="category-tradition.html">博览</a></li>
+          <li><a data-nav="expo" href="expo.html">博览</a></li>
           <li><a data-nav="workshop" href="workshop.html">工坊</a></li>
           <li><a data-nav="library" href="library.html">智库</a></li>
           <li><a data-nav="contact" href="contact.html">关于</a></li>

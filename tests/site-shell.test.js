@@ -8,10 +8,9 @@ const requiredPaths = [
   "index.html",
   "login.html",
   "contact.html",
-  "category-tradition.html",
-  "category-folk.html",
-  "category-opera.html",
-  "category-handcraft.html",
+  "expo.html",
+  "workshop.html",
+  "library.html",
   "detail-celadon.html",
   "detail-xuanzhi.html",
   "detail-blueprint.html",
@@ -91,10 +90,10 @@ test("login and contact pages expose forms for validation", () => {
   assert.match(read("contact.html"), /id="contactForm"/);
 });
 
-test("category pages expose category metadata", () => {
-  assert.match(read("category-opera.html"), /data-category="opera"/);
-  assert.match(read("category-tradition.html"), /data-category="tradition"/);
-  assert.match(read("category-tradition.html"), /class="panel list-card main-list"/);
+test("expo page supports category via URL query", () => {
+  const content = read("expo.html");
+  assert.match(content, /data-page="expo"/);
+  assert.match(content, /id="categoryList"/);
 });
 
 test("category layout stacks sidebar earlier to protect the main content width", () => {

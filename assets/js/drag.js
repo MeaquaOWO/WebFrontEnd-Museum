@@ -3,7 +3,7 @@
     return [
       { href: "#hero", label: "卷首导览" },
       { href: "#featuredExhibits", label: "精选展品" },
-      { href: "category-tradition.html", label: "博览" },
+      { href: "expo.html", label: "博览" },
       { href: "workshop.html", label: "工坊" },
       { href: "library.html", label: "智库问答" }
     ];
