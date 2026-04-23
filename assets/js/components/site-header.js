@@ -19,10 +19,9 @@ class SiteHeader extends HTMLElement {
       <nav class="main-nav" aria-label="主导航">
         <ul>
           <li><a data-nav="home" href="index.html">首页</a></li>
-          <li><a data-nav="tradition" href="category-tradition.html">传统技艺</a></li>
-          <li><a data-nav="folk" href="category-folk.html">民俗</a></li>
-          <li><a data-nav="opera" href="category-opera.html">戏曲</a></li>
-          <li><a data-nav="handcraft" href="category-handcraft.html">手工</a></li>
+          <li><a data-nav="expo" href="category-tradition.html">博览</a></li>
+          <li><a data-nav="workshop" href="workshop.html">工坊</a></li>
+          <li><a data-nav="library" href="library.html">智库</a></li>
           <li><a data-nav="contact" href="contact.html">关于</a></li>
         </ul>
       </nav>
@@ -156,7 +155,7 @@ class SiteHeader extends HTMLElement {
   highlightNav() {
     const currentPage = document.body?.getAttribute('data-page');
     if (!currentPage) return;
-    
+
     this.shadowRoot.querySelectorAll('[data-nav]').forEach(link => {
       const active = link.getAttribute('data-nav') === currentPage;
       link.classList.toggle('is-active', active);
