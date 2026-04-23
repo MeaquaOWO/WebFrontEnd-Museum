@@ -41,6 +41,13 @@
     return next;
   }
 
+  function removeCollectionItem(storage, itemId) {
+    const current = readCollection(storage);
+    const next = current.filter((entry) => entry.id !== itemId);
+    saveCollection(storage, next);
+    return next;
+  }
+
   function readMessages(storage) {
     return safeParse(storage.getItem(MESSAGE_KEY), []);
   }
@@ -123,6 +130,7 @@
     readCollection,
     saveCollection,
     addCollectionItem,
+    removeCollectionItem,
     readMessages,
     saveMessages,
     hydrateCommonUI

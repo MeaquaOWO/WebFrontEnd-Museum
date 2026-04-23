@@ -18,9 +18,30 @@
       return;
     }
 
-    target.innerHTML = items.length
-      ? `<ul class="collection-items">${items.map((item) => `<li>${item.title}</li>`).join("")}</ul>`
-      : '<p class="side-empty">把感兴趣的展品拖到这里。</p>';
+    if (!items.length) {
+      target.innerHTML = '<p class="side-empty">把感兴趣的展品拖到这里。</p>';
+      return;
+    }
+
+    target.innerHTML = `
+      <ul class="collection-items">
+        ${items.map((item) => `
+          <li class="collection-item" data-id="${item.id}">
+            <span class="collection-item-title">${item.title}</span>
+            <button type="button" class="collection-remove" aria-label="移除收藏">×</button>
+          </li>
+        `).join("")}
+      </ul>
+    `;
+
+    target.querySelectorAll(".collection-remove").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        const item = btn.closest(".collection-item");
+        const itemId = item.dataset.id;
+        const next = window.heritageCommon.removeCollectionItem(localStorage, itemId);
+        renderCollection(target, next);
+      });
+    });
   }
 
   function renderFloatingGuide() {

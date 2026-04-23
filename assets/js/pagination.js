@@ -151,7 +151,7 @@
       <div class="side-note">
         <h2>迷你收藏馆</h2>
         <p>把卡片拖到下方，生成你的个人路线。</p>
-        <div id="miniCollection" class="collection-list collection-dropzone"></div>
+        <div id="miniCollection" class="collection-list"></div>
       </div>
     `;
   }
