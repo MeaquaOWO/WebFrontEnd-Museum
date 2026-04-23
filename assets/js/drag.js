@@ -134,7 +134,7 @@
             <img src="${item.image}" alt="${item.title}">
             <h3>${item.title}</h3>
             <p>${item.summary}</p>
-            <a class="btn btn--secondary" href="${item.detailPage}">查看详情</a>
+            <a class="btn btn--secondary" href="detail.html?id=${item.id}">查看详情</a>
           </article>
         `).join("")}
       </div>

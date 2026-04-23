@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>京剧 · 锦绣非遗</title>
+  <title>非遗详情</title>
   <link rel="stylesheet" href="assets/css/global.css">
   <link rel="stylesheet" href="assets/css/subpage.css">
 </head>
-<body data-page="opera" data-detail-id="jingju">
-  <site-header page="opera"></site-header>
+<body data-page="expo">
+  <site-header page="expo"></site-header>
   <main class="page-main">
     <div class="container subpage-layout">
       <section id="detailHero" class="panel detail-card"></section>
@@ -23,5 +23,11 @@
   <script src="assets/js/data.js"></script>
   <script src="assets/js/common.js"></script>
   <script src="assets/js/pagination.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const detailId = params.get('id') || 'dragon-boat';
+    document.body.setAttribute('data-page', 'folk');
+    document.body.setAttribute('data-detail-id', detailId);
+  </script>
 </body>
 </html>

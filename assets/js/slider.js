@@ -148,7 +148,7 @@
         <article class="video-card">
           <h3>推荐从京剧详情页开始</h3>
           <p>京剧最适合串联脸谱、颜色寓意和表演程式，也能和下方脸谱工坊直接联动。</p>
-          <a class="btn" href="detail-jingju.html">去看京剧视频</a>
+          <a class="btn" href="detail.html?id=jingju">去看京剧视频</a>
         </article>
         <article class="video-card">
           <h3>推荐浏览路线</h3>

@@ -83,7 +83,7 @@
       </div>
       <div class="preview-actions">
         <a class="video-link" href="${item.video}" target="_blank" rel="noreferrer">打开演示视频</a>
-        <a class="btn" href="${item.detailPage}">查看完整详情</a>
+        <a class="btn" href="detail.html?id=${item.id}">查看完整详情</a>
       </div>
     `;
   }
@@ -224,7 +224,7 @@
           <p>${item.summary}</p>
           <div class="card-actions">
             <button type="button" class="btn btn--secondary" data-preview="${item.id}">快速预览</button>
-            <a class="btn" href="${item.detailPage}">查看详情</a>
+            <a class="btn" href="detail.html?id=${item.id}">查看详情</a>
           </div>
         </article>
       `).join("");
@@ -330,7 +330,7 @@
           <article class="exhibit-card">
             <h3>${entry.title}</h3>
             <p>${entry.summary}</p>
-            <a class="btn btn--secondary" href="${entry.detailPage}">继续浏览</a>
+            <a class="btn btn--secondary" href="detail.html?id=${entry.id}">继续浏览</a>
           </article>
         `).join("")}
       </div>
