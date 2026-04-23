@@ -70,19 +70,6 @@
     target.textContent = username ? `欢迎你，${username}` : "未登录访客";
   }
 
-  function updateCollectionBadge() {
-    if (typeof document === "undefined" || typeof localStorage === "undefined") {
-      return;
-    }
-
-    const target = document.querySelector("[data-collection-count]");
-    if (!target) {
-      return;
-    }
-
-    target.textContent = String(readCollection(localStorage).length);
-  }
-
   function highlightNav() {
     if (typeof document === "undefined") {
       return;
@@ -116,7 +103,6 @@
   function hydrateCommonUI() {
     highlightNav();
     updateUsernameUI();
-    updateCollectionBadge();
     bindLogout();
   }
 

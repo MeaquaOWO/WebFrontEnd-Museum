@@ -41,7 +41,6 @@ class SiteHeader extends HTMLElement {
         <li><span data-username>未登录访客</span></li>
         <li data-login-link><a href="login.html">登录</a></li>
         <li data-logout-link style="display:none"><a href="#" data-logout>退出</a></li>
-        <li><span>收藏 <strong data-collection-count>0</strong></span></li>
       </ul>
     `;
 
@@ -147,7 +146,6 @@ class SiteHeader extends HTMLElement {
     setTimeout(() => {
       this.highlightNav();
       this.updateUsernameUI();
-      this.updateCollectionBadge();
       this.bindLogout();
     }, 0);
   }
@@ -179,18 +177,6 @@ class SiteHeader extends HTMLElement {
         loginLink.style.display = 'block';
         logoutLink.style.display = 'none';
       }
-    }
-  }
-
-  updateCollectionBadge() {
-    const target = this.shadowRoot.querySelector('[data-collection-count]');
-    if (!target) return;
-
-    try {
-      const items = JSON.parse(localStorage.getItem('heritage.collection') || '[]');
-      target.textContent = String(items.length);
-    } catch {
-      target.textContent = '0';
     }
   }
 
