@@ -269,8 +269,7 @@
 .exhibit-card,
 .video-card,
 .studio-note,
-.studio-side,
-.ai-tips {
+.studio-side {
   padding: 20px;
   border-radius: var(--radius-lg);
   background: rgba(255, 255, 255, 0.8);
@@ -611,10 +610,6 @@
   border-radius: 999px;
   color: var(--blue);
   background: rgba(255, 255, 255, 0.86);
-}
-
-.ai-mode {
-  color: var(--ink-soft);
 }
 
 .ai-chat {

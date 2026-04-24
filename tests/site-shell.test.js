@@ -26,7 +26,6 @@ const requiredPaths = [
   "assets/css/global.css",
   "assets/css/home.css",
   "assets/css/subpage.css",
-  "assets/js/assistant-config.js",
   "assets/js/data.js",
   "assets/js/common.js",
   "assets/js/login.js",
@@ -63,7 +62,6 @@ test("home page wires global and home assets", () => {
   assert.match(html, /assets\/css\/global\.css/);
   assert.match(html, /assets\/css\/home\.css/);
   assert.match(html, /assets\/js\/common\.js/);
-  assert.match(html, /assets\/js\/assistant-config\.js/);
   assert.match(html, /assets\/js\/assistant\.js/);
   assert.match(html, /data-page="home"/);
   assert.match(html, /id="floatingGuide"/);
